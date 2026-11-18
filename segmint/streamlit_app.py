@@ -56,8 +56,6 @@ with st.sidebar:
     st.title('◆ Customer Segmentation')
     page = st.radio('Navigation', ['Overview', 'Segments', 'Insights', 'New Customer'], label_visibility='collapsed')
     st.divider()
-    st.caption('Komal Gulve')
-    st.caption('Data Scientist')
 
 if page == 'Overview':
     st.title('Customer Segmentation')
@@ -216,6 +214,7 @@ st.markdown("""
 [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {background: #16b5a8;}
 [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) * {color: white !important;}
 [data-testid="stSidebar"] hr {border-color: rgba(255,255,255,.12);}
+.sidebar-footer {position: fixed; bottom: 1.4rem; left: 4.25rem; z-index: 20; color: #e8f3f6; font-size: 12px;}
 [data-testid="stMain"] .block-container {padding-top: 2rem; max-width: 1100px;}
 [data-testid="stMetric"] {background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(11,42,63,.08);}
 [data-testid="stMetric"] label, [data-testid="stMetric"] [data-testid="stMetricDelta"] {color: #5d7384 !important;}
@@ -229,4 +228,5 @@ button[kind="primary"] {background: #16b5a8; border: none; border-radius: 8px;}
 """, unsafe_allow_html=True)
 
 st.divider()
+st.markdown('<div class="sidebar-footer">Komal</div>', unsafe_allow_html=True)
 st.caption('Data note: Insights are descriptive and should be validated before operational use.')
