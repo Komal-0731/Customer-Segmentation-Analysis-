@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-st.set_page_config(page_title="Segmint", page_icon="◆", layout="wide")
+st.set_page_config(page_title="Customer Segmentation", page_icon="◆", layout="wide")
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 FEATS = ['Age', 'Income', 'Recency', 'NumDealsPurchases', 'NumWebVisitsMonth',
@@ -24,6 +24,9 @@ SEG = [
          insight='High income, high spend, few children. Most responsive to campaigns.',
          strategy='Focus on retention: premium programmes, personalised catalogue offers, early access.'),
 ]
+
+PLOT_LAYOUT = dict(paper_bgcolor='white', plot_bgcolor='white', font=dict(family='Inter, sans-serif', color='#0f2a3d'),
+                   margin=dict(l=40, r=20, t=35, b=40), legend=dict(orientation='h', y=-0.18))
 
 @st.cache_resource
 def load_model():
@@ -50,7 +53,7 @@ segment_colors = ['#2fc4b2', '#1e3f73', '#a78bfa']
 df['Segment Name'] = df['Cluster'].map(lambda c: SEG[int(c)]['name'])
 
 with st.sidebar:
-    st.title('◆ Segmint')
+    st.title('◆ Customer Segmentation')
     page = st.radio('Navigation', ['Overview', 'Segments', 'Insights', 'New Customer'], label_visibility='collapsed')
     st.divider()
     st.caption('Komal Gulve')
@@ -81,7 +84,7 @@ if page == 'Overview':
         dist.columns = ['Cluster', 'Customers']
         fig = px.bar(dist, x='Cluster', y='Customers', color='Cluster', text='Customers',
                      color_discrete_sequence=segment_colors)
-        fig.update_layout(showlegend=False, xaxis_title='Segment', yaxis_title='Customers')
+        fig.update_layout(showlegend=False, xaxis_title='Segment', yaxis_title='Customers', **PLOT_LAYOUT)
         st.plotly_chart(fig, use_container_width=True)
 
     with right:
@@ -135,6 +138,8 @@ elif page == 'Insights':
         fig = px.scatter(sample, x='Income', y='Total_Spending', color='Cluster',
                          color_discrete_sequence=segment_colors,
                          labels={'Income':'Annual Income ($)', 'Total_Spending':'Total Spending ($)'})
+
+        fig.update_layout(showlegend=True, **PLOT_LAYOUT)
         st.plotly_chart(fig, use_container_width=True)
 
     with right:
@@ -161,7 +166,7 @@ elif page == 'Insights':
         summary = df.groupby('Cluster')[metric].mean().reset_index()
         fig = px.bar(summary, x='Cluster', y=metric, color='Cluster', text_auto='.1f',
                      color_discrete_sequence=segment_colors)
-        fig.update_layout(showlegend=False, xaxis_title='Segment', yaxis_title=title)
+        fig.update_layout(showlegend=False, xaxis_title='Segment', yaxis_title=title, **PLOT_LAYOUT)
         chart_cols[idx % 3].plotly_chart(fig, use_container_width=True)
 
     st.subheader('Key Insights')
@@ -200,6 +205,28 @@ else:
             st.markdown(f"**Key Insight:** {segment['insight']}\n\n**Recommended Strategy:** {segment['strategy']}")
         except Exception as exc:
             st.error(f'Prediction failed: {exc}')
+
+st.markdown("""
+<style>
+[data-testid="stAppViewContainer"] {background: #f2f7f9;}
+[data-testid="stHeader"] {background: transparent;}
+[data-testid="stSidebar"] {background: linear-gradient(180deg, #0b2a3f, #0f4457 60%, #0b2a3f);}
+[data-testid="stSidebar"] * {color: #e8f3f6 !important;}
+[data-testid="stSidebar"] [role="radiogroup"] label {padding: 8px 10px; border-radius: 8px;}
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {background: #16b5a8;}
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) * {color: white !important;}
+[data-testid="stSidebar"] hr {border-color: rgba(255,255,255,.12);}
+[data-testid="stMain"] .block-container {padding-top: 2rem; max-width: 1100px;}
+[data-testid="stMetric"] {background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(11,42,63,.08);}
+[data-testid="stMetric"] label, [data-testid="stMetric"] [data-testid="stMetricDelta"] {color: #5d7384 !important;}
+[data-testid="stMetric"] [data-testid="stMetricValue"] {color: #0f2a3d !important;}
+[data-testid="stAlert"] {background: white; border: 1px solid #dfe8ed; color: #0f2a3d; border-radius: 12px;}
+[data-testid="stDataFrame"] {border-radius: 12px; overflow: hidden;}
+button[kind="primary"] {background: #16b5a8; border: none; border-radius: 8px;}
+[data-testid="stSidebarCollapseButton"] {color: white !important;}
+#MainMenu, footer {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
 
 st.divider()
 st.caption('Data note: Insights are descriptive and should be validated before operational use.')
