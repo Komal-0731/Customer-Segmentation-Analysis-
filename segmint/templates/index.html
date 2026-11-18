@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Segmint – Customer Segmentation</title>
+<style>
+:root{--teal:#16b5a8;--navy:#0d2f45;--bg:#f2f7f9;--ink:#0f2a3d;--mut:#5d7384;--c0:#2fc4b2;--c1:#1e3f73;--c2:#a78bfa}
+*{box-sizing:border-box;margin:0}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
+aside{width:200px;background:linear-gradient(180deg,#0b2a3f,#0f4457 60%,#0b2a3f);color:#fff;padding:20px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.logo{font-size:22px;font-weight:700;padding:0 8px 24px}.logo b{color:#2fd3b8}
+nav a{display:flex;gap:10px;padding:11px 12px;border-radius:8px;color:#d4e4ea;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;cursor:pointer}
+nav a.on{background:var(--teal);color:#fff}
+.user{margin-top:auto;font-size:12px;padding:8px;display:flex;gap:8px;align-items:center}.user small{display:block;opacity:.6;font-size:10px}
+.av{width:30px;height:30px;border-radius:50%;background:#dfe9ee;color:var(--navy);display:grid;place-items:center}
+main{flex:1;padding:24px 28px;max-width:1100px}
+h1{font-size:26px}.sub{color:var(--mut);font-size:14px;margin:4px 0 18px}
+.row{display:grid;gap:14px;margin-bottom:14px}.r3{grid-template-columns:repeat(3,1fr)}.r2{grid-template-columns:1.3fr 1fr}
+.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 6px #0b2a3f14}
+.kpi{display:flex;gap:14px;align-items:center}.kpi i{font-style:normal;font-size:26px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#fff8}
+.kpi b{font-size:26px;display:block}.kpi span{font-size:13px;color:var(--mut)}
+.k0{background:#e2f7f4}.k1{background:#f0eafd}.k2{background:#e4f0fc}
+.t0{background:#e2f7f4}.t1{background:#efe9fd}.t2{background:#e3effb}
+h3{font-size:16px;margin-bottom:10px}
+.pill{display:inline-block;padding:3px 14px;border-radius:99px;font-size:12px;font-weight:700;background:#fff;margin-bottom:10px}
+.seg{text-align:center;font-size:13px;line-height:1.5}.seg h4{font-size:15px;margin:6px 0}.seg p{color:var(--mut);margin-top:8px}
+.big{font-size:30px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{background:#eef4f7;text-align:left}th,td{padding:10px 12px;border-bottom:1px solid #e6eef2}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+.lg{display:flex;gap:16px;font-size:12px;flex-wrap:wrap;margin-top:6px}
+svg{width:100%;height:auto;display:block}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:12px}
+input,select{width:100%;margin-top:4px;padding:9px 10px;border:1px solid #d5e1e7;border-radius:8px;font:inherit;background:#fff}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+button{background:var(--teal);color:#fff;border:0;padding:13px;border-radius:9px;font-weight:700;font-size:15px;width:100%;cursor:pointer;margin-top:6px}
+.res{background:#e2f7f4;border:1px solid #bfece6}
+.res .name{background:#cdf1ec;border-radius:10px;padding:16px;font-size:20px;font-weight:800;margin:12px 0}
+.res h5{font-size:14px;margin:12px 0 4px}.res p{font-size:13px;color:#33505f}
+.err{background:#fde8e8;color:#8a1c1c;padding:14px;border-radius:10px;font-size:13px}
+.meta{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}.meta small{color:var(--mut)}
+.download{display:inline-block;width:auto;margin:0;padding:9px 14px;text-decoration:none;background:var(--teal);color:#fff;border-radius:8px;font-size:13px;font-weight:700}
+.summary{line-height:1.7}.summary strong{color:var(--navy)}
+.filters{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:12px}.filters label{margin:0}.filters button{width:auto;padding:9px 14px;margin:0}
+.disclaimer{font-size:12px;color:var(--mut);border-top:1px solid #e6eef2;margin-top:18px;padding-top:12px}
+.r4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:800px){aside{display:none}.r3,.r2,.form{grid-template-columns:1fr}main{padding:16px}.meta,.filters{display:block}.filters>*{margin-bottom:10px}.download{display:inline-block}.r4{grid-template-columns:1fr}}
+</style></head><body>
+<aside><div class="logo"><b>◆</b> Segmint</div>
+<nav><a data-v="overview" class="on">🏠 Overview</a><a data-v="segments">👥 Segments</a><a data-v="new">➕ New Customer</a><a data-v="insights">📊 Insights</a></nav>
+<div class="user"><div class="av">👤</div><div>Komal Gulve<small>Data Scientist</small></div></div></aside>
+<main id="m"></main>
+<script>
+const C=['#2fc4b2','#1e3f73','#a78bfa'],$=s=>document.querySelector(s);
+const fmt=n=>Math.round(n).toLocaleString('en-US'),K=n=>'$'+(n/1000).toFixed(1)+'K';
+let D,view='overview';
+const head=(t,s)=>`<h1>${t}</h1><p class="sub">${s}</p>`;
+const lg=()=>`<div class="lg">${D.segments.map((s,i)=>`<span><i class="dot" style="background:${C[i]}"></i>Segment ${i} (${s.share}%)</span>`).join('')}</div>`;
+const bars=()=>{const m=Math.max(...D.segments.map(s=>s.customers));return `<svg viewBox="0 0 420 220">${D.segments.map((s,i)=>{const h=s.customers/m*150,x=40+i*130;return `<rect x="${x}" y="${190-h}" width="90" height="${h}" rx="4" fill="${C[i]}"/><text x="${x+45}" y="${182-h}" text-anchor="middle" font-weight="700">${s.customers}</text><text x="${x+45}" y="209" text-anchor="middle" font-size="11">Segment ${i} (${s.share}%)</text>`}).join('')}</svg>`};
+const donut=()=>{let o=0;return `<svg viewBox="0 0 160 160" style="max-width:230px;margin:auto"><g transform="rotate(-90 80 80)">${D.segments.map((s,i)=>{const l=s.customers/D.customers*377,e=`<circle cx="80" cy="80" r="60" fill="none" stroke="${C[i]}" stroke-width="26" stroke-dasharray="${l} 377" stroke-dashoffset="${-o}"/>`;o+=l;return e}).join('')}</g><text x="80" y="82" text-anchor="middle" font-size="20" font-weight="800">${fmt(D.customers)}</text><text x="80" y="95" text-anchor="middle" font-size="9">Customers</text></svg>`};
+const scat=()=>{const P=D.points,mx=Math.max(...P.map(p=>p[0])),my=Math.max(...P.map(p=>p[1]));return `<svg viewBox="0 0 460 280"><path d="M50 10V240H450" stroke="#aab" fill="none"/>${P.map(p=>`<circle cx="${50+p[0]/mx*390}" cy="${240-p[1]/my*225}" r="3.4" fill="${C[p[2]]}" opacity=".75"/>`).join('')}<text x="250" y="272" text-anchor="middle" font-size="11">Annual Income ($)</text><text transform="rotate(-90 12 125)" x="12" y="125" text-anchor="middle" font-size="11">Total Spending (2 yrs, $)</text><text x="50" y="254" font-size="10">0</text><text x="450" y="254" font-size="10" text-anchor="end">${K(mx)}</text><text x="45" y="18" font-size="10" text-anchor="end">${fmt(my)}</text></svg>`};
+const tiles=()=>D.segments.map((s,i)=>`<div class="card seg t${i}"><span class="pill">Segment ${i}</span><div class="big">${s.icon}</div><h4>${s.name}</h4>${s.share}% of customers<p>${s.blurb}</p></div>`).join('');
+const V={
+overview:()=>head('Customer Segmentation','Understand your customers better with data-driven insights.')+
+`<div class="meta"><small>Dataset: 2,058 customers · Updated 18 Nov 2026</small><a class="download" href="/api/report">⬇ Download CSV Report</a></div>
+<div class="row r4" style="margin-top:12px"><div class="card kpi k0"><i>👥</i><div><b>${fmt(D.customers)}</b><span>Customers</span></div></div><div class="card kpi k1"><i>◔</i><div><b>3</b><span>Segments</span></div></div><div class="card kpi k2"><i>🪙</i><div><b>${K(D.income)}</b><span>Avg. Annual Income</span></div></div><div class="card kpi k0"><i>🛒</i><div><b>${D.avg_purchases}</b><span>Avg. Purchases</span></div></div></div>
+<div class="card summary"><h3>Executive Summary</h3><p><strong>${D.largest_segment}</strong> is the largest segment at <strong>${D.largest_segment_share}%</strong>. <strong>${D.top_spending_segment}</strong> contributes the highest share of total spending at <strong>${D.top_spending_share}%</strong>. The portfolio contains <strong>${fmt(D.customers)}</strong> customers with average annual income of <strong>${K(D.income)}</strong> and an average age of <strong>${D.avg_age}</strong>.</p></div>
+<div class="row r2"><div class="card"><h3>Customer Distribution</h3>${bars()}</div><div class="card"><h3>Segment Share</h3>${donut()}${lg()}</div></div>
+<h3>Customer Segment Profiles</h3><div class="row r3" id="segmentTiles">${tiles()}</div>
+<p class="disclaimer"><strong>Data note:</strong> Insights are descriptive and may change as new customer data is added. Segment assignments and recommendations should be validated before operational use.</p>`,
+segments:()=>head('Customer Segments','Explore and compare your customer groups.')+
+`<div class="filters"><label>Age range<select id="ageFilter"><option value="all">All ages</option><option value="young">Under 35</option><option value="middle">35–55</option><option value="older">Over 55</option></select></label><label>Income range<select id="incomeFilter"><option value="all">All incomes</option><option value="low">Below $40K</option><option value="mid">$40K–$80K</option><option value="high">Above $80K</option></select></label><label>Segment<select id="segmentFilter"><option value="all">All segments</option>${D.segments.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}</select></label><button id="clearFilters" type="button">Clear Filters</button></div>
+<div class="row r3" id="segmentTiles">${tiles()}</div>
+<div class="card"><h3>Segment Comparison</h3><div style="overflow-x:auto"><table><thead><tr><th>Segment</th><th>Customers</th><th>Avg. Income</th><th>Avg. Spend (2 yrs)</th><th>Share of Spend</th><th>Key Insight</th></tr></thead><tbody>
+${D.segments.map((s,i)=>`<tr data-segment="${i}"><td><i class="dot" style="background:${C[i]}" data-segment="${i}"></i>${i} - ${s.name}</td><td>${s.customers}</td><td>${K(s.income)}</td><td>$${fmt(s.spend)}</td><td>${s.spend_share}%</td><td>${s.strategy}</td></tr>`).join('')}</tbody></table></div></div>
+<p class="disclaimer"><strong>Filter note:</strong> Segment selectors highlight matching profiles and comparison rows; the KPI totals continue to represent the complete dataset.</p>`,
+new:()=>head('Segment a Customer','Enter customer details to find their segment.')+
+`<div class="row r2"><div class="card"><h3>Customer Information</h3><div class="form" id="f"></div><button id="go">🔍 Find Segment</button><div id="e"></div></div><div id="out" class="card res" style="display:none"></div></div>`,
+insights:()=>head('Insights & Analytics','Discover key insights and get data-driven recommendations.')+
+`<div class="row r2"><div class="card"><h3>Income vs Spending</h3>${scat()}${lg()}</div><div class="card"><h3>Segment Profile Comparison</h3>${radar()}${lg()}</div></div>
+<div class="row r3"><div class="card"><h3>Average Annual Income</h3>${metricBars('income','Annual income ($)',v=>K(v))}</div><div class="card"><h3>Purchases per Customer</h3>${metricBars('purchases','Average total purchases')}</div><div class="card"><h3>Campaign Acceptance</h3>${metricBars('campaigns','Average accepted campaigns')}</div></div>
+<div class="row r3"><div class="card"><h3>Web Visits per Month</h3>${metricBars('web_visits','Average web visits')}</div><div class="card"><h3>Deal Purchases</h3>${metricBars('deals','Average deal purchases')}</div><div class="card"><h3>Customer Recency</h3>${metricBars('recency','Days since last purchase')}</div></div>
+<div class="card k0"><h3>★ Key Insights</h3><div class="row r3" style="margin:0">${D.segments.map((s,i)=>`<div><b>Segment ${i} (${s.share}%)</b><p style="font-size:13px;margin-top:6px">${s.insight}<br>Generates ${s.spend_share}% of total spend.</p></div>`).join('')}</div></div>
+<div class="row r3" style="margin-top:14px">${D.segments.map((s,i)=>`<div class="card t${i}"><h3>${s.icon} Recommended Action</h3><p style="font-size:13px;line-height:1.6"><strong>${s.name}</strong><br>${s.strategy}</p></div>`).join('')}</div>
+<p class="disclaimer"><strong>Data note:</strong> Campaign and retention decisions should account for customer consent, local privacy rules, campaign cost, and incremental expected return.</p>`,
+};
+const F=[['Age','Age',45],['Income','Annual Income ($)',52000],['Education_Level','Education',1,['Basic','Graduate','Postgraduate']],['Is_Partner','Living with partner',1,['No','Yes']],['Total_Children','Children at home',1],['Total_Spending','Total spending, 2 yrs ($)',600],['Total_Purchases','Total purchases',14],['NumDealsPurchases','Discount purchases',2],['NumWebVisitsMonth','Web visits / month',5],['Total_Campaign_Accepted','Campaigns accepted (0-6)',0],['Recency','Days since last purchase',49],['Customer_Tenure_Days','Days as customer',350]];
+function form(){$('#f').innerHTML=F.map(([k,l,v,o])=>`<label>${l}${o?`<select id="${k}">${o.map((t,i)=>`<option value="${i}" ${i==v?'selected':''}>${t}</option>`).join('')}</select>`:`<input id="${k}" type="number" min="0" value="${v}">`}</label>`).join('');
+$('#go').onclick=async()=>{const b={};F.forEach(([k])=>b[k]=$('#'+k).value);$('#e').innerHTML='';
+const r=await fetch('/api/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}),j=await r.json();
+if(!r.ok){$('#e').innerHTML=`<div class="err" style="margin-top:10px">${j.error}</div>`;return}
+const o=$('#out');o.style.display='block';o.innerHTML=`<h3>✅ Assigned Segment</h3><div class="name">Segment ${j.segment}<br>${j.icon} ${j.name}</div><h5>💡 Key Insight</h5><p>${j.insight}</p><h5>📈 Recommended Strategy</h5><p>${j.strategy}</p>`}}
+function draw(){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.v==view));$('#m').innerHTML=V[view]();if(view=='new')form();if(view=='segments')setupSegmentFilters()}
+function setupSegmentFilters(){
+const apply=()=>{const selected=$('#segmentFilter').value;document.querySelectorAll('#segmentTiles .seg').forEach((tile,i)=>tile.style.display=(selected==='all'||selected===String(i))?'block':'none');document.querySelectorAll('tbody tr[data-segment]').forEach(row=>row.style.display=(selected==='all'||selected===row.dataset.segment)?'table-row':'none')};
+$('#segmentFilter').onchange=apply;
+$('#clearFilters').onclick=()=>{$('#segmentFilter').value='all';apply()};
+$('#ageFilter').onchange=()=>{};
+$('#incomeFilter').onchange=()=>{};
+}
+document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>{view=a.dataset.v;draw()});
+fetch('/api/summary').then(r=>r.json().then(j=>{if(!r.ok)throw j.error;D=j;draw()})).catch(e=>$('#m').innerHTML=`<div class="err"><b>Model files not loaded.</b><br>Put <code>customer_segmentation_model.pkl</code> and <code>customers_with_segments.csv</code> (saved by your notebook) next to app.py.<br><small>${e}</small></div>`);
+const metricBars=(field,label,format=v=>Math.round(v))=>{const vals=D.segments.map(s=>s[field]),mx=Math.max(...vals)||1;return `<svg viewBox="0 0 460 230"><text x="0" y="14" font-size="11" fill="#5d7384">${label}</text>${D.segments.map((s,i)=>{const y=38+i*58,w=s[field]/mx*300;return `<circle cx="12" cy="${y+12}" r="5" fill="${C[i]}"/><text x="24" y="${y+16}" font-size="11">Segment ${i}</text><rect x="125" y="${y}" width="300" height="24" rx="5" fill="#edf3f6"/><rect x="125" y="${y}" width="${w}" height="24" rx="5" fill="${C[i]}"/><text x="435" y="${y+17}" text-anchor="end" font-size="11" font-weight="700">${format(s[field])}</text>`}).join('')}</svg>`};
+const radar=()=>{const metrics=['income','purchases','campaigns','web_visits','tenure'],labels=['Income','Purchases','Campaigns','Web visits','Tenure'],cx=220,cy=120,r=78;
+const normalized=k=>{const vals=D.segments.map(s=>s[k]),mn=Math.min(...vals),mx=Math.max(...vals)||1;return D.segments.map(s=>(s[k]-mn)/(mx-mn||1))};
+const axis=(level)=>metrics.map((_,i)=>{const a=-Math.PI/2+i*Math.PI*2/metrics.length;return `${cx+Math.cos(a)*r*level},${cy+Math.sin(a)*r*level}`}).join(' ');
+const grid=[.25,.5,.75,1].map(level=>`<polygon points="${axis(level)}" fill="none" stroke="#dfe8ed"/>`).join('');
+const labelsHtml=labels.map((label,i)=>{const a=-Math.PI/2+i*Math.PI*2/labels.length,x=cx+Math.cos(a)*(r+38),y=cy+Math.sin(a)*(r+38);return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-size="10">${label}</text>`}).join('');
+const polygons=D.segments.map((s,i)=>{const values=metrics.map(k=>normalized(k)[i]);const points=values.map((v,j)=>{const a=-Math.PI/2+j*Math.PI*2/metrics.length;return `${cx+Math.cos(a)*r*v},${cy+Math.sin(a)*r*v}`}).join(' ');return `<polygon points="${points}" fill="${C[i]}" fill-opacity=".16" stroke="${C[i]}" stroke-width="2"/>`}).join('');
+const legend=D.segments.map((s,i)=>`<circle cx="${152+i*60}" cy="260" r="5" fill="${C[i]}"/><text x="${161+i*60}" y="264" font-size="10">S${i}</text>`).join('');
+return `<svg viewBox="0 0 440 280">${grid}${labelsHtml}${polygons}${legend}</svg>`};
+</script></body></html>
