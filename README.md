@@ -1,104 +1,360 @@
-# Segmint
 
-Segmint is a customer segmentation dashboard for exploring customer groups, reviewing segment-level behavior, and assigning segments to individual customers or uploaded customer datasets. The primary interface is built with Streamlit. A Flask application is also included.
+# 🚀 Segmint – Customer Segmentation Dashboard
 
-## Features
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=36BCF7&center=true&vCenter=true&width=600&lines=Customer+Segmentation+Dashboard;Machine+Learning+Project;Understand+Customers+Better" alt="Segmint" />
+</p>
 
-- **Overview:** customer totals, income and purchase summaries, segment counts, customer shares, and segment profile cards.
-- **Segments:** compare customer groups and review their average income, spending, and segment recommendations.
-- **Insights:** explore spending versus income, compare normalized segment profiles, and review metric charts and key insights.
-- **New Customer:** enter one customer's feature values and predict a segment.
-- **Upload Dataset:** upload a CSV of customers, validate its required features, predict segments in a batch, and download the results.
+<p align="center">
+  An interactive Machine Learning dashboard for customer segmentation, behavioral analysis, and customer group prediction.
+</p>
 
-The dashboard uses three model cluster IDs. Their displayed names are Budget-Conscious Families, Value-Seeking Established Families, and Affluent Premium Buyers. Cluster IDs are model outputs; segment descriptions and recommendations are descriptive guidance and should be validated before operational use.
+<p align="center">
+  <a href="https://3pw3xiyxwchnjhdvuvburu.streamlit.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Open%20Website-brightgreen?style=for-the-badge&logo=streamlit" />
+  </a>
+</p>
 
-## Requirements
+---
 
-- Python 3.10 or later is recommended.
-- Install the root `requirements.txt` for the Streamlit app. It pins scikit-learn to `1.7.2`, the version used to save the model artifact.
-- Keep `customer_segmentation_model.pkl` from a trusted source. Joblib/pickle model files can execute code when loaded; do not load untrusted files.
+## 🌐 Live Application
 
-## Run the Streamlit app
+**Explore the deployed application here:**
 
-From the repository root, create and activate a virtual environment, then install the dependencies:
+👉 [Open Segmint – Customer Segmentation Dashboard](https://3pw3xiyxwchnjhdvuvburu.streamlit.app/)
+
+---
+
+## 📖 About The Project
+
+**Segmint** is a Customer Segmentation Dashboard developed using Python, Machine Learning, and Streamlit.
+
+The project helps businesses understand customer behavior by grouping customers into different segments based on their purchasing patterns, income, spending habits, and other characteristics.
+
+The dashboard provides interactive visualizations, customer insights, individual customer predictions, and batch predictions through CSV uploads.
+
+The project also includes a Flask application with a dashboard interface and prediction API.
+
+---
+
+## 🎯 Project Objectives
+
+- Analyze customer purchasing behavior.
+- Identify meaningful customer groups.
+- Understand income and spending patterns.
+- Predict customer segments using a trained Machine Learning model.
+- Provide useful insights for customer-focused business decisions.
+- Support predictions for individual customers and uploaded datasets.
+
+---
+
+## ✨ Key Features
+
+### 1. 📊 Overview Dashboard
+
+- Total customer count.
+- Income and purchase summaries.
+- Customer segment distribution.
+- Customer share percentages.
+- Segment profile cards.
+
+### 2. 👥 Customer Segments
+
+- Compare different customer groups.
+- Analyze average income and spending.
+- Review segment-level recommendations.
+- Understand customer characteristics.
+
+### 3. 📈 Insights & Analytics
+
+- Spending versus income visualization.
+- Normalized segment profile comparisons.
+- Interactive metric charts.
+- Important customer insights.
+
+### 4. 🔍 New Customer Prediction
+
+- Enter individual customer details.
+- Submit customer feature values.
+- Predict the customer's segment.
+- Display the predicted customer group.
+
+### 5. 📂 Upload Customer Dataset
+
+- Upload customer datasets in CSV format.
+- Validate required input columns.
+- Predict customer segments in bulk.
+- Preview prediction results.
+- Download the complete dataset with predictions.
+
+---
+
+## 👨‍👩‍👧 Customer Segments
+
+The trained Machine Learning model produces three cluster IDs, which are displayed using the following descriptive names:
+
+| Cluster | Segment Name |
+|---|---|
+| Cluster 0 | Budget-Conscious Families |
+| Cluster 1 | Value-Seeking Established Families |
+| Cluster 2 | Affluent Premium Buyers |
+
+*Note: Cluster IDs are model outputs. Segment names and recommendations are descriptive interpretations, not independently validated business classifications.*
+
+---
+
+## 🛠️ Technologies Used
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,flask,mysql,html,css,git,github,vscode" />
+</p>
+
+| Technology | Purpose |
+|---|---|
+| Python | Main programming language |
+| Streamlit | Interactive dashboard |
+| Flask | Web application and prediction API |
+| Pandas | Data manipulation |
+| NumPy | Numerical operations |
+| Scikit-learn | Machine Learning and clustering |
+| Matplotlib | Data visualization |
+| Joblib / Pickle | Model artifact loading |
+
+---
+
+## 📸 Project Screenshots
+
+Add your actual screenshots in the `screenshots` folder and use the following image paths.
+
+### Dashboard Overview
+
+![Segmint Dashboard](./screenshots/overview.png)
+
+### Customer Segments
+
+![Customer Segments](./screenshots/segments.png)
+
+### Insights & Analytics
+
+![Customer Insights](./screenshots/insights.png)
+
+### New Customer Prediction
+
+![New Customer Prediction](./screenshots/new-customer.png)
+
+### Upload Customer Dataset
+
+![Upload Dataset](./screenshots/upload-dataset.png)
+
+---
+
+## 📁 Project Structure
+
+```text
+Segmint/
+│
+├── segmint/
+│   ├── streamlit_app.py
+│   ├── app.py
+│   ├── templates/
+│   │   └── index.html
+│   ├── customer_segmentation_model.pkl
+│   ├── customers_with_segments.csv
+│   └── requirements.txt
+│
+├── screenshots/
+│   ├── overview.png
+│   ├── segments.png
+│   ├── insights.png
+│   ├── new-customer.png
+│   └── upload-dataset.png
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+
+- Python 3.10 or later.
+- VS Code or another Python editor.
+- Git.
+- Required model and customer data files.
+
+### Step 1: Clone the Repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+```bash
+cd Segmint
+```
+
+### Step 2: Create a Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+### Step 3: Activate Virtual Environment
+
+**Windows PowerShell:**
 
 ```powershell
-python -m venv .venv
 .venv\Scripts\Activate.ps1
+```
+
+### Step 4: Install Dependencies
+
+```bash
 python -m pip install --upgrade pip
+```
+
+```bash
 python -m pip install -r requirements.txt
+```
+
+### Step 5: Run Streamlit Application
+
+```bash
 python -m streamlit run segmint/streamlit_app.py
 ```
 
-Open `http://localhost:8501` in a browser. Stop the local server with `Ctrl+C` in the terminal.
+Open the following URL in your browser:
 
-The app expects these files inside the `segmint/` directory:
-
-- `customer_segmentation_model.pkl` - trained segmentation pipeline.
-- `customers_with_segments.csv` - dashboard data, or `customers_with_segments.xls` containing CSV-formatted text as a fallback.
-
-The `.xls` fallback is read with `pandas.read_csv`; it must contain CSV text, not a binary Excel workbook. Prefer the `.csv` filename.
-
-## Upload a customer dataset
-
-Choose **Upload Dataset** in the sidebar. The upload must be a CSV with one row per customer and all of the following numeric columns:
-
-| Column | Meaning |
-| --- | --- |
-| `Age` | Customer age in years |
-| `Income` | Annual income |
-| `Recency` | Days since last purchase |
-| `NumDealsPurchases` | Number of discount purchases |
-| `NumWebVisitsMonth` | Website visits per month |
-| `Total_Spending` | Total customer spending |
-| `Total_Purchases` | Total purchases |
-| `Total_Children` | Children at home |
-| `Total_Campaign_Accepted` | Accepted campaign count |
-| `Customer_Tenure_Days` | Days as a customer |
-| `Education_Level` | Encoded education category: `0` Basic, `1` Graduate, `2` Postgraduate |
-| `Is_Partner` | Partner status: `0` No, `1` Yes |
-
-Use the **Download CSV template** button in the app to get a header-only template. Required values must be numeric and cannot be blank or infinite. Additional input columns are preserved in the downloaded output. The result adds `Predicted Cluster` and `Predicted Segment` columns. The preview shows up to the first 100 rows; the download contains the full uploaded dataset with predictions.
-
-The uploader assigns new customers using the existing saved model. It does not retrain the model or redefine segment groups. To use different features or redefine the segments, retrain and save a compatible model and update the app's feature schema and segment descriptions.
-
-## Run the Flask app
-
-The Flask app has a separate dependency file that includes Flask and Gunicorn. From the repository root:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r segmint/requirements.txt
-python segmint/app.py
+```text
+http://localhost:8501
 ```
 
-Open `http://127.0.0.1:5000`. The Flask app also expects the model and customer data files inside `segmint/`. Its `/api/predict` endpoint accepts JSON containing the same 12 feature fields listed above.
+---
 
-## Deploy on Streamlit Community Cloud
+## 📤 Upload Customer Dataset
 
-1. Push the repository to GitHub, including the root `requirements.txt` and the required model/data artifacts in `segmint/`.
-2. Create a Streamlit Community Cloud app from the repository.
-3. Set the main file path to `segmint/streamlit_app.py`.
-4. Deploy and open the URL provided by Streamlit.
+The application supports uploading customer data in CSV format.
 
-Keep the model and data files available to the deployed app. If deployment rejects large artifacts, store them in an appropriate artifact service and update the app's loading configuration.
+The uploaded CSV must contain the following 12 numeric feature columns:
 
-## Troubleshooting
+| Column | Description |
+|---|---|
+| Age | Customer age |
+| Income | Annual income |
+| Recency | Days since last purchase |
+| NumDealsPurchases | Number of discount purchases |
+| NumWebVisitsMonth | Website visits per month |
+| Total_Spending | Total customer spending |
+| Total_Purchases | Total purchases |
+| Total_Children | Children at home |
+| Total_Campaign_Accepted | Accepted campaign count |
+| Customer_Tenure_Days | Customer tenure in days |
+| Education_Level | Encoded education category |
+| Is_Partner | Partner status |
 
-- **Model or data file not found:** verify that the expected files are present in `segmint/` and that their names match the paths above.
-- **Model loading or scikit-learn warning:** install dependencies from the root `requirements.txt` so scikit-learn matches the model's saved version (`1.7.2`). Models saved with a different scikit-learn version may fail or produce unreliable results.
-- **Upload reports missing columns:** use the built-in CSV template and keep the required column names exactly as listed.
-- **Upload reports invalid values:** check the reported columns and CSV row numbers for blank or non-numeric feature values.
-- **Excel upload:** the batch uploader currently accepts CSV files only. Export Excel data to CSV before uploading.
+The application:
 
-## Project files
+1. Validates the uploaded dataset.
+2. Checks the required feature columns.
+3. Predicts customer clusters using the saved model.
+4. Displays prediction results.
+5. Provides a downloadable CSV containing predicted clusters and segment names.
 
-- `segmint/streamlit_app.py` - primary Streamlit dashboard and batch upload workflow.
-- `segmint/app.py` - Flask dashboard and JSON API.
-- `segmint/templates/index.html` - Flask dashboard interface.
-- `segmint/customer_segmentation_model.pkl` - trained model artifact required by both apps.
-- `segmint/customers_with_segments.xls` - bundled customer data; this file is CSV-formatted text and is loaded with `pandas.read_csv`. You may replace it with a real `.csv` file named `customers_with_segments.csv`.
-- `requirements.txt` - Streamlit app dependencies, including the model's scikit-learn version pin.
-- `segmint/requirements.txt` - dependencies for running the Flask app.
+**Important:** The uploaded dataset does not retrain the model. It uses the existing trained model to predict customer segments.
+
+---
+
+## 🚀 Deployment
+
+The Streamlit application is deployed using **Streamlit Community Cloud**.
+
+**Live Application:**
+
+👉 https://3pw3xiyxwchnjhdvuvburu.streamlit.app/
+
+To deploy your own version:
+
+1. Push the project repository to GitHub.
+2. Open Streamlit Community Cloud.
+3. Connect your GitHub account.
+4. Select your repository.
+5. Set the main file path to:
+
+```text
+segmint/streamlit_app.py
+```
+
+6. Deploy the application.
+
+Ensure that the required model and customer data files are available to the deployed application.
+
+---
+
+## 🔒 Model & Data Security
+
+The project loads a trained model using Joblib/Pickle.
+
+- Only load trusted model files.
+- Keep the scikit-learn version compatible with the saved model.
+- The root `requirements.txt` pins scikit-learn to version `1.7.2`.
+- Do not upload sensitive customer information to a public repository.
+
+---
+
+## 🔧 Troubleshooting
+
+**1. Model file not found**
+
+Check whether `customer_segmentation_model.pkl` exists inside the `segmint/` directory.
+
+**2. Missing dependencies**
+
+Run:
+
+```bash
+pip install -r requirements.txt
+```
+
+**3. Missing CSV columns**
+
+Use the CSV template provided in the application and ensure all required column names match exactly.
+
+**4. Invalid customer values**
+
+Check for missing, non-numeric, or infinite feature values.
+
+**5. Model version compatibility**
+
+Use scikit-learn version `1.7.2`, as specified in the root requirements file.
+
+---
+
+## 🔮 Future Enhancements
+
+- Add advanced customer behavior analytics.
+- Improve dashboard visualization.
+- Add customer-specific recommendations.
+- Explore additional clustering algorithms.
+- Enhance model evaluation and segment validation.
+- Improve deployment and data management.
+
+---
+
+## 👩‍💻 Developed By
+
+**Komal Gulve**
+
+Computer Engineering | Python | Machine Learning | Data Science
+
+---
+
+## ⭐ Support
+
+If you find this project interesting, consider giving the repository a ⭐ Star!
+
+<p align="center">
+  <b>Thank you for visiting Segmint!</b>
+  <br/>
+  Turning Customer Data into Meaningful Insights 🚀
+</p>
