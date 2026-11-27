@@ -128,7 +128,7 @@ Add your actual screenshots in the `screenshots` folder and use the following im
 
 ### Dashboard Overview
 
-![Segmint Dashboard](./screenshots/Screenshot(406).png)
+![Segmint Dashboard](./screenshots/overview.png)
 
 ### Customer Segments
 
